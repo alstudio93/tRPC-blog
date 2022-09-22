@@ -36,7 +36,7 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
     const onEdit = ({name, about}: {name: string, about: string}) => {
         setIsEditing(true);
         return editProfile.mutate({
-            id: userProfile?.id!,
+            id,
             name,
             about
         })

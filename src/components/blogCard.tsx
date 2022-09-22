@@ -58,7 +58,7 @@ const BlogCard:React.FC<{
       // Delete
   const {mutate: deletePost} = trpc.useMutation("post.delete-post", {
     onSuccess: ()=> {
-      client.invalidateQueries(["post.get-posts"])
+      client.invalidateQueries(["post.get-my-posts"])
     }
   })
 
@@ -84,7 +84,7 @@ const BlogCard:React.FC<{
 
     {/* Blog Content */}
     {
-      onHomePage && <Markdown className="max-w-none">{`${inputs.content.slice(0, 300)}...`}</Markdown>
+      onHomePage && <Markdown>{`${inputs.content.slice(0, 300)}...`}</Markdown>
     }
     
 

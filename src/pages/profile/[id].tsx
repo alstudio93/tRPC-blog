@@ -1,16 +1,22 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import Image from 'next/image';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import ReactTextareaAutosize from 'react-textarea-autosize';
 import AuthWrapper from '../../components/AuthWrapper';
 import Markdown from '../../components/Markdown';
 import { trpc } from '../../utils/trpc'
+import BlogCard from '../../components/blogCard';
+import { useSession } from 'next-auth/react';
 
 const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    const {data: session} = useSession();
 
     const [isEditing, setIsEditing] = useState(false);
 
     const {data: userProfile} = trpc.useQuery(["user.get-profile", {id}]);
+
+    const {data: recentPosts} = trpc.useQuery(["post.get-my-posts"]);
 
     const client = trpc.useContext();
 
@@ -36,22 +42,38 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
         })
     };
 
+    const isProfileOwner = session?.user?.id === userProfile?.id
+
   return (
     <AuthWrapper redirect={userProfile?.name!}>
-        <main className='py-5 max-w-3xl mx-auto'>
-            <h1 className='capitalize text-4xl text-center'>Welcome back! {userProfile?.name!}</h1>
+        <main className='py-5 max-w-6xl mx-auto'>
+            {/* <h1 className='capitalize text-4xl text-center'>Welcome back! {userProfile?.name!}</h1> */}
         
-            <form className='flex flex-col gap-y-5 max-w-lg mx-auto pt-10'>
-                {/* <h2 className='text-center text-2xl'>Update your Profile Information</h2> */}
-                <h2 className='text-2xl'>{userProfile?.name}</h2>
-                <div className='w-full leading-relaxed'>
-                    <Markdown>{userProfile?.about!}</Markdown>
+                <div className='flex justify-between items-center gap-x-10'>
+                    <h1 className='text-5xl'>{userProfile?.name}</h1>
+                    <Image src={userProfile?.image!} height="100" width="100" alt="" className='rounded-full'/>
                 </div>
+                <div className='w-full leading-relaxed'>
+                    <Markdown className="max-w-none">{userProfile?.about!}</Markdown>
+                </div>
+            {
+                isProfileOwner && (
+                    <form className='flex flex-col gap-y-8 max-w-lg mx-auto pt-10'>
+                {/* <h2 className='text-center text-2xl'>Update your Profile Information</h2> */}
                 {
                     isEditing && (
                         <>
-                            <input className="px-5 py-2 rounded-lg rounded-br-none" placeholder='Your Name' {...register("name")} defaultValue={userProfile?.name!}/>
-                            <ReactTextareaAutosize className="px-5 py-2 rounded-lg" placeholder='Write a little about yourself' {...register("about")} defaultValue={userProfile?.about!}/>
+                            <fieldset className="flex flex-col gap-y-2">  
+                                <label htmlFor='fullName'>Full Name</label>
+                                <input id="fullName" className="px-5 py-2 rounded-lg rounded-br-none" placeholder='Your Name' {...register("name")} defaultValue={userProfile?.name!}/>
+                            </fieldset>
+                        {/*
+                            TODO -- Store Value in local storage so an edit does not get erased upon page refresh
+                        */}
+                            <fieldset className="flex flex-col gap-y-2">
+                                <label htmlFor="biography">Biography</label>
+                                <ReactTextareaAutosize id="biography" className="px-5 py-2 rounded-lg" placeholder='Write a little about yourself' {...register("about")} defaultValue={userProfile?.about!}/>
+                            </fieldset>
                         </>
                     )
                 }
@@ -60,10 +82,31 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
                         {isEditing ? "Publish Changes"  : "Edit Profile"}
                     </button>
                     {isEditing && 
-                        <button className=' border px-4 py-2 mt-5' onClick={()=> setIsEditing(false)}>Cancel</button>
+                        <button className=' border px-4 py-2 mt-5' onClick={()=> setIsEditing(false)}>Cancel Edit</button>
                     }
                 </div>
             </form>
+                )
+            }
+
+            {/* Show Most Recent Posts */}
+            <section className='flex gap-x-5 items-center'>
+                {recentPosts?.map((blog)=> (
+                    <BlogCard 
+                    key={blog.id}
+                    onHomePage={true}
+                    inputs={{
+                      id: blog.id,
+                      title: blog.title,
+                      content: blog.content,
+                      created: blog.createdAt,
+                      updated: blog.updated,
+                      username: blog.user.name,
+                      image: blog.user.image,
+                      email: blog.user.email,
+                    }}/>
+                ))}
+            </section>
         </main>
      </AuthWrapper>
   )

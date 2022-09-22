@@ -9,9 +9,9 @@ const SinglePost = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>
   return (
     <>  
         <Navbar />
-        <main className='max-w-6xl mx-auto pt-10'>
-        <h1 className='text-center text-6xl pb-10'>{data?.title}</h1>
-        <Markdown>{data?.content as string}</Markdown>
+            <main className='max-w-6xl mx-auto pt-10'>
+            <h1 className='text-center text-6xl pb-10'>{data?.title}</h1>
+            <Markdown>{data?.content as string}</Markdown>  
         </main>
     </>
   )

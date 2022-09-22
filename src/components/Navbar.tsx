@@ -30,7 +30,7 @@ const Navbar = () => {
               </>
             }
             <li>
-            {!session ? <button onClick={()=> signIn("github")}>Login</button> : <button onClick={()=> signOut({callbackUrl: "/"})}>Logout</button>}
+            {!session ? <button onClick={()=> signIn("google")}>Login</button> : <button onClick={()=> signOut({callbackUrl: "/"})}>Logout</button>}
             </li>
             {session && (
           <>

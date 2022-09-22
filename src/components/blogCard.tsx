@@ -84,7 +84,7 @@ const BlogCard:React.FC<{
 
     {/* Blog Content */}
     {
-      onHomePage && <Markdown>{`${inputs.content.slice(0, 300)}...`}</Markdown>
+      onHomePage && <Markdown className="max-w-none">{`${inputs.content.slice(0, 300)}...`}</Markdown>
     }
     
 
@@ -107,7 +107,10 @@ const BlogCard:React.FC<{
           <button className="p-2 w-32 mx-auto border rounded-lg" onClick={()=> handleDelete(inputs.id)}>Delete</button>
       </div>
     }
+    <div className='flex gap-x-10 relative'>
+    <small>Created On: {inputs.created.toLocaleDateString()}</small> <div className='absolute before:content-none before:top-0 before:h-[20px] before:w-[20px] before:bg-[#fff]'/>
     {inputs.updated && <small className='text-center'> Updated on: {inputs?.updated!.toLocaleDateString()}</small> }
+    </div>
     </div>
 
     </article>

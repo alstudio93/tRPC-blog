@@ -64,14 +64,14 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
                         <>
                             <fieldset className="flex flex-col gap-y-2">  
                                 <label htmlFor='fullName'>Full Name</label>
-                                <input id="fullName" className="px-5 py-2 rounded-lg rounded-br-none" placeholder='Your Name' {...register("name")} defaultValue={userProfile?.name}/>
+                                <input id="fullName" className="px-5 py-2 rounded-lg rounded-br-none" placeholder='Your Name' {...register("name")}/>
                             </fieldset>
                         {/*
                             TODO -- Store Value in local storage so an edit does not get erased upon page refresh
                         */}
                             <fieldset className="flex flex-col gap-y-2">
                                 <label htmlFor="biography">Biography</label>
-                                <ReactTextareaAutosize id="biography" className="px-5 py-2 rounded-lg" placeholder='Write a little about yourself' {...register("about")} defaultValue={userProfile?.about ? userProfile.about : ""}/>
+                                <ReactTextareaAutosize id="biography" className="px-5 py-2 rounded-lg" placeholder='Write a little about yourself' {...register("about")}/>
                             </fieldset>
                         </>
                     )

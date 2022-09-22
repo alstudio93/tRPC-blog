@@ -33,9 +33,10 @@ export const postRouter = createRouter()
   .query("get-my-posts", {
     async resolve({ctx}){
       if(ctx.session) {
-       const posts = await ctx.prisma.post.findMany({
+       if(ctx.session.user?.email){
+        const posts = await ctx.prisma.post.findMany({
           where: {
-            userEmail: ctx.session.user?.email!
+            userEmail: ctx.session.user?.email
           },
           select: {
             id: true,
@@ -55,6 +56,7 @@ export const postRouter = createRouter()
         return [...posts].map((post)=> ({
           ...post
         }))
+       }
       }
     }
   })
@@ -93,13 +95,15 @@ export const postRouter = createRouter()
     async resolve({input, ctx}){
       if(!ctx.session) throw new Error("Unauthorized");
       if(ctx.session){
+       if(ctx.session.user?.email){
         return await ctx.prisma.post.create({
           data: {
             title: input.title,
             content: input.content,
-            userEmail: ctx.session.user?.email!
+            userEmail: ctx.session.user?.email
           },
         });
+       }
       }
     }
   })

@@ -41,7 +41,7 @@ export const userRouter = createRouter()
         if(findProfile.id === ctx.session.user.id){
           return await ctx.prisma.user.update({
             where: {
-              id: ctx.session.user?.id
+              id: ctx.session.user.id
             },
             data: {
               name: input.name,

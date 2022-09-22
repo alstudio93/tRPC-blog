@@ -35,7 +35,7 @@ const Navbar = () => {
             {session && (
           <>
           {/* <p>{session.user?.name}</p>  */}
-          <Image src={session.user?.image!} height={30} width={30} objectFit="cover" className="rounded-full "/>
+          {session.user?.image && <Image src={session.user?.image} height={30} width={30} objectFit="cover" className="rounded-full "/>}
           </>
         )}
             

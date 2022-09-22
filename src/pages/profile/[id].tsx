@@ -22,8 +22,8 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
 
     const {register, handleSubmit} = useForm({
         defaultValues: {
-            name: userProfile?.name && "",
-            about: userProfile?.about && ""
+            name: userProfile?.name!,
+            about: userProfile?.about!
         }
     });
 

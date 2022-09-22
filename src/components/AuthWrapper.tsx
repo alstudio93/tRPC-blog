@@ -4,15 +4,14 @@ import Navbar from './Navbar';
 
 const AuthWrapper: React.FC<{
     children: React.ReactNode;
-    redirect: string;
-}> = ({children, redirect}) => {
+}> = ({children}) => {
 
     const { status } = useSession();
 
     const authCheck = () => {
         if(status === "unauthenticated"){
            signIn("github", {
-                callbackUrl: `http://localhost:3000/profile/${redirect}`
+                callbackUrl: `http://localhost:3000`
             })
         }
     }

@@ -22,8 +22,8 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
 
     const {register, handleSubmit} = useForm({
         defaultValues: {
-            name: userProfile?.name! && "",
-            about: userProfile?.about! && ""
+            name: userProfile?.name && "",
+            about: userProfile?.about && ""
         }
     });
 
@@ -45,16 +45,15 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
     const isProfileOwner = session?.user?.id === userProfile?.id
 
   return (
-    <AuthWrapper redirect={userProfile?.name!}>
+    <AuthWrapper>
         <main className='py-5 max-w-6xl mx-auto'>
-            {/* <h1 className='capitalize text-4xl text-center'>Welcome back! {userProfile?.name!}</h1> */}
         
                 <div className='flex justify-between items-center gap-x-10'>
                     <h1 className='text-5xl'>{userProfile?.name}</h1>
-                    <Image src={userProfile?.image!} height="100" width="100" alt="" className='rounded-full'/>
+                    {userProfile?.image && <Image src={userProfile?.image} height="100" width="100" alt="" className='rounded-full'/>}
                 </div>
                 <div className='w-full leading-relaxed'>
-                    <Markdown className="max-w-none">{userProfile?.about!}</Markdown>
+                    {userProfile?.about && <Markdown className="max-w-none">{userProfile?.about}</Markdown>}
                 </div>
             {
                 isProfileOwner && (
@@ -65,14 +64,14 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
                         <>
                             <fieldset className="flex flex-col gap-y-2">  
                                 <label htmlFor='fullName'>Full Name</label>
-                                <input id="fullName" className="px-5 py-2 rounded-lg rounded-br-none" placeholder='Your Name' {...register("name")} defaultValue={userProfile?.name!}/>
+                                <input id="fullName" className="px-5 py-2 rounded-lg rounded-br-none" placeholder='Your Name' {...register("name")} defaultValue={userProfile?.name}/>
                             </fieldset>
                         {/*
                             TODO -- Store Value in local storage so an edit does not get erased upon page refresh
                         */}
                             <fieldset className="flex flex-col gap-y-2">
                                 <label htmlFor="biography">Biography</label>
-                                <ReactTextareaAutosize id="biography" className="px-5 py-2 rounded-lg" placeholder='Write a little about yourself' {...register("about")} defaultValue={userProfile?.about!}/>
+                                <ReactTextareaAutosize id="biography" className="px-5 py-2 rounded-lg" placeholder='Write a little about yourself' {...register("about")} defaultValue={userProfile?.about ? userProfile.about : ""}/>
                             </fieldset>
                         </>
                     )

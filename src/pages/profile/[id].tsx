@@ -1,13 +1,15 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import Image from 'next/image';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import ReactTextareaAutosize from 'react-textarea-autosize';
 import AuthWrapper from '../../components/AuthWrapper';
 import Markdown from '../../components/Markdown';
 import { trpc } from '../../utils/trpc'
 import BlogCard from '../../components/blogCard';
 import { useSession } from 'next-auth/react';
+
+
 
 const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     const {data: session} = useSession();
@@ -22,8 +24,8 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
 
     const {register, handleSubmit} = useForm({
         defaultValues: {
-            name: userProfile?.name!,
-            about: userProfile?.about!
+            name: userProfile?.name,
+            about: userProfile?.about
         }
     });
 
@@ -33,14 +35,14 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
         }
     });
 
-    const onEdit = ({name, about}: {name: string, about: string}) => {
-        setIsEditing(true);
-        return editProfile.mutate({
-            id,
-            name,
-            about
-        })
-    };
+    // const onEdit: SubmitHandler<{ name: "" | null | undefined; about: "" | null | undefined; }> = ({name, about}) => {
+    //     setIsEditing(true);
+    //     return editProfile.mutate({
+    //         id,
+    //         name,
+    //         about
+    //     })
+    // };
 
     const isProfileOwner = session?.user?.id === userProfile?.id
 
@@ -77,9 +79,9 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
                     )
                 }
                 <div className='flex  justify-center gap-x-5'>
-                    <button onClick={handleSubmit(onEdit)} className=" border px-4 py-2 mt-5 flex-1">
+                    {/* <button onClick={handleSubmit(onEdit)} className=" border px-4 py-2 mt-5 flex-1">
                         {isEditing ? "Publish Changes"  : "Edit Profile"}
-                    </button>
+                    </button> */}
                     {isEditing && 
                         <button className=' border px-4 py-2 mt-5' onClick={()=> setIsEditing(false)}>Cancel Edit</button>
                     }

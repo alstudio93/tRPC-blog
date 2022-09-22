@@ -53,7 +53,7 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
                     {userProfile?.image && <Image src={userProfile?.image} height="100" width="100" alt="" className='rounded-full'/>}
                 </div>
                 <div className='w-full leading-relaxed'>
-                    {userProfile?.about && <Markdown className="max-w-none">{userProfile?.about}</Markdown>}
+                    {userProfile?.about && <Markdown>{userProfile?.about}</Markdown>}
                 </div>
             {
                 isProfileOwner && (

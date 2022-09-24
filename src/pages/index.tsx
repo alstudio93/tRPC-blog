@@ -9,6 +9,7 @@ import BlogCard from "../components/blogCard";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
 import AllUsers from "../components/All-Users";
+import Footer from "../components/Footer";
 
 const Home: NextPage = (props) => {
 
@@ -73,8 +74,6 @@ const Home: NextPage = (props) => {
     })
   }
 
-  console.log(data)
-
   return (
     <>
       <Head>
@@ -83,10 +82,10 @@ const Home: NextPage = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
         <Navbar/>
-          <main className="container mx-auto flex items-center justify-center min-h-screen p-4">
+          <main className="container mx-auto flex items-center pt-20">
 
 
-       <section className="flex flex-wrap gap-x-5 max-w-6xl justify-center">
+       <section className="flex flex-wrap gap-x-5 max-w-6xl justify-center flex-1">
         <h2 className="text-8xl">Display Posts</h2>
         <div className="flex gap-x-5 mt-10">
           <button className="border px-4 py-3 rounded-lg" onClick={()=> setSort("nameAsc")}>Sort A - Z</button>
@@ -115,6 +114,7 @@ const Home: NextPage = (props) => {
 
        <AllUsers/>
       </main>
+      <Footer/>
       
       </>
   )

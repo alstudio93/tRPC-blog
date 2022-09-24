@@ -9,6 +9,8 @@ import Link from 'next/link';
 import Markdown from './Markdown';
 import { useRouter } from 'next/router';
 import { dateFormatter } from '../utils/dateFormatter';
+import { BsMarkdown } from 'react-icons/bs';
+import {AiOutlineDelete} from 'react-icons/ai'
 
 const BlogCard:React.FC<{
     inputs: {
@@ -104,7 +106,10 @@ const BlogCard:React.FC<{
               <input {...register("title")} className="w-full rounded-lg px-2 py-3" placeholder={inputs.title}  />
               <TextareaAutosize rows={7} {...register("content")}  className="w-full rounded-lg px-2 py-3" placeholder={inputs.content} />
             </form>
-            <button onClick={()=> setShowEdit(showEdit => !showEdit)}>{showEdit ? "Cancel Edit" : "Edit Post"}</button>
+            <div className='flex items-center justify-between'>
+            <button className='border p-2 w-40 rounded-lg' onClick={()=> setShowEdit(showEdit => !showEdit)}>{showEdit ? "Cancel Edit" : "Edit Post"}</button>
+           {showEdit && <span className='flex items-center gap-x-3'> Markdown Cheatsheet: <Link href="https://www.markdownguide.org/cheat-sheet/"><a title="Markdown Cheatsheet"><BsMarkdown className='text-3xl '/></a></Link></span>}
+            </div>
           </>
         )
       }
@@ -112,14 +117,15 @@ const BlogCard:React.FC<{
     {onMyBlogs && session?.user?.email === inputs.email && 
       <div className='flex items-center gap-x-10'>
           {showEdit && <button className="p-2 w-40 mx-auto border rounded-lg" onClick={handleSubmit(onEditPost)}>Publish Changes</button>}
-          <button className="p-2 w-32 mx-auto border rounded-lg" onClick={()=> handleDelete(inputs.id)}>Delete</button>
+          {/* <button className="p-2 w-32 mx-auto border rounded-lg" >Delete</button> */}
       </div>
     }
-    <div className='flex gap-x-10 relative'>
+    <div className='flex items-center gap-x-10 relative'>
     <small>Created On: {dateFormatter(inputs.created)}</small> 
       <div className='absolute before:content-none before:top-0 before:h-[20px] before:w-[20px] before:bg-[#fff]'/>
         {inputs.updated && 
     <small className='text-center'> Updated on: {dateFormatter(inputs.updated)}</small> }
+    <AiOutlineDelete  className='text-3xl cursor-pointer' onClick={()=> handleDelete(inputs.id)} />
     </div>
     </div>
 

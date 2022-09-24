@@ -1,7 +1,7 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import Image from 'next/image';
 import { useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import ReactTextareaAutosize from 'react-textarea-autosize';
 import AuthWrapper from '../../components/AuthWrapper';
 import Markdown from '../../components/Markdown';
@@ -13,8 +13,6 @@ import { useSession } from 'next-auth/react';
 
 const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
 
-    const userId = id;
-    console.log(userId);
     
     const {data: session} = useSession();
 
@@ -22,14 +20,12 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
 
     const {data: userProfile} = trpc.useQuery(["user.get-profile", {id}]);
 
-    const {data: recentPosts} = trpc.useQuery(["post.get-my-posts"]);
-
     const client = trpc.useContext();
 
     const {register, handleSubmit} = useForm({
         defaultValues: {
-            name: userProfile?.name,
-            about: userProfile?.about
+            name: userProfile?.name ?? "",
+            about: userProfile?.about ?? ""
         }
     });
 

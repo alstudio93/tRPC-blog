@@ -31,7 +31,7 @@ const MyBlogs = ({}) => {
   const {mutate: createPost} = trpc.useMutation("post.create-post", {
     onSuccess: () => {
       client.invalidateQueries(["post.get-my-posts"])
-      // reset();
+      reset();
     }
   })
 
@@ -93,7 +93,6 @@ const MyBlogs = ({}) => {
          </div>
 
           <div className='flex flex-wrap gap-x-10 justify-center'>
-            {/* <h2>{session?.user?.name}'s Blogs</h2> */}
             {userBlogs?.map((blog)=> (
         <BlogCard
                 key={blog.id}

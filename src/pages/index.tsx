@@ -86,7 +86,10 @@ const Home: NextPage = (props) => {
 
 
        <section className="flex flex-wrap gap-x-5 max-w-6xl justify-center flex-1">
-        <h2 className="text-8xl">Display Posts</h2>
+        <div className="flex flex-col items-center gap-y-5">
+        <h2 className="text-6xl">Welcome to Blogger!</h2>
+        <p>Browse through all our users recently created posts</p>
+        </div>
         <div className="flex gap-x-5 mt-10">
           <button className="border px-4 py-3 rounded-lg" onClick={()=> setSort("nameAsc")}>Sort A - Z</button>
           <button className="border px-4 py-3 rounded-lg" onClick={()=> setSort("nameDesc")}>Sort Z - A</button>

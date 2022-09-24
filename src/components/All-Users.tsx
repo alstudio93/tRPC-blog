@@ -1,9 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react'
-import { trpc } from '../utils/trpc'
+import { trpc } from '../utils/trpc';
 
-const Users = ({}) => {
+const AllUsers = () => {
     const {data} = trpc.useQuery(["user.get-all-users"]);
 
 
@@ -19,4 +18,4 @@ const Users = ({}) => {
   )
 }
 
-export default Users
+export default AllUsers

@@ -8,6 +8,7 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import BlogCard from "../components/blogCard";
 import { useState } from "react";
 import Navbar from "../components/Navbar";
+import AllUsers from "../components/All-Users";
 
 const Home: NextPage = (props) => {
 
@@ -82,8 +83,10 @@ const Home: NextPage = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
         <Navbar/>
-          <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
+          <main className="container mx-auto flex items-center justify-center min-h-screen p-4">
 
+
+       <section className="flex flex-wrap gap-x-5 max-w-6xl justify-center">
         <h2 className="text-8xl">Display Posts</h2>
         <div className="flex gap-x-5 mt-10">
           <button className="border px-4 py-3 rounded-lg" onClick={()=> setSort("nameAsc")}>Sort A - Z</button>
@@ -91,8 +94,6 @@ const Home: NextPage = (props) => {
           <button className="border px-4 py-3 rounded-lg" onClick={()=> setSort("createdAsc")}>Sort by Newest</button>
           <button className="border px-4 py-3 rounded-lg" onClick={()=> setSort("updatedNew")}>Sort by Recently Updated</button>
          </div>
-
-       <section className="flex flex-wrap gap-x-5 max-w-6xl justify-center">
        {!isLoading && data?.map((post)=> (
         <BlogCard 
         key={post.id}
@@ -111,6 +112,8 @@ const Home: NextPage = (props) => {
        />
        ))}
        </section>
+
+       <AllUsers/>
       </main>
       
       </>

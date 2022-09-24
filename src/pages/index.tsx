@@ -82,10 +82,15 @@ const Home: NextPage = (props) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
         <Navbar/>
-          <main className="container mx-auto flex items-center pt-20">
+          <main className="container mx-auto flex items-center justify-center pt-20">
+
+        <div className="w-52">
+         <p> Left Sidebar</p>
+         <p> What should go here?</p>
+        </div>
 
 
-       <section className="flex flex-wrap gap-x-5 max-w-6xl justify-center flex-1">
+       <section className="flex flex-wrap gap-x-5 max-w-6xl justify-center">
         <div className="flex flex-col items-center gap-y-5">
         <h2 className="text-6xl">Welcome to Blogger!</h2>
         <p>Browse through all our users recently created posts</p>

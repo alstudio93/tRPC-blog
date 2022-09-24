@@ -20,6 +20,23 @@ export const userRouter = createRouter()
     }
   })
 
+  .query("get-all-users", {
+    async resolve({ctx}){
+      const users = await ctx.prisma.user.findMany({
+        select: {
+          id: true,
+          name: true,
+          image: true
+        }
+      })
+      return users.map((user)=> {
+        return {
+          ...user
+        }
+      })
+    }
+  })
+
   .mutation("edit-profile", {
     input: z.object({
       id: z.string(),

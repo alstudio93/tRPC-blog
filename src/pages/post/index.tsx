@@ -104,11 +104,11 @@ const MyBlogs = ({}) => {
                   content: blog.content,
                   created: blog.createdAt,
                   updated: blog.updated,
-                  username: blog.user.name,
+                  userId: blog.user.id,
+                  name: blog.user.name,
                   image: blog.user.image,
                   email: blog.user.email,
                 }}
-                userId={undefined}
                 />
         ))}
           </div>

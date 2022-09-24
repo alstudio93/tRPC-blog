@@ -23,8 +23,7 @@ const BlogCard:React.FC<{
         email: string | null;
     },
     onHomePage: boolean;
-    userId: string | undefined;
-}> = ({onHomePage, inputs, userId}) => {
+}> = ({onHomePage, inputs}) => {
 
   const router = useRouter();
   const onMyBlogs = router.pathname.includes("/post")

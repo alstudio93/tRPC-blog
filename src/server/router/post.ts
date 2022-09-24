@@ -47,6 +47,7 @@ export const postRouter = createRouter()
             updated: true,
             user: {
               select: {
+                id: true,
                 name: true,
                 email: true,
                 image: true

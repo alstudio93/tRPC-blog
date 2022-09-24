@@ -108,7 +108,7 @@ const Home: NextPage = (props) => {
           image: post.user.image,
           email: post.user.email,
         }}
-        userId={undefined}/>
+       />
        ))}
        </section>
       </main>

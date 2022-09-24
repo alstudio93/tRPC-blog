@@ -95,7 +95,7 @@ const BlogCard:React.FC<{
 
     {/* Blog Content */}
     {
-      onHomePage && <Markdown>{`${inputs.content.slice(0, 300)}...`}</Markdown>
+      onHomePage && <Markdown>{`${inputs.content.slice(0, 300)}`}</Markdown>
     }
     
     {/* Update Form */}

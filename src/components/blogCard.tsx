@@ -125,7 +125,7 @@ const BlogCard:React.FC<{
       <div className='absolute before:content-none before:top-0 before:h-[20px] before:w-[20px] before:bg-[#fff]'/>
         {inputs.updated && 
     <small className='text-center'> Updated on: {dateFormatter(inputs.updated)}</small> }
-    <AiOutlineDelete  className='text-3xl cursor-pointer' onClick={()=> handleDelete(inputs.id)} />
+    {router.pathname === "/post" && <AiOutlineDelete  className='text-3xl cursor-pointer' onClick={()=> handleDelete(inputs.id)} />}
     </div>
     </div>
 

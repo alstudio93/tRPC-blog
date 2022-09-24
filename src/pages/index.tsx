@@ -72,6 +72,8 @@ const Home: NextPage = (props) => {
     })
   }
 
+  console.log(data)
+
   return (
     <>
       <Head>
@@ -84,7 +86,7 @@ const Home: NextPage = (props) => {
 
         <h2 className="text-8xl">Display Posts</h2>
         <div className="flex gap-x-5 mt-10">
-         <button className="border px-4 py-3 rounded-lg" onClick={()=> setSort("nameAsc")}>Sort A - Z</button>
+          <button className="border px-4 py-3 rounded-lg" onClick={()=> setSort("nameAsc")}>Sort A - Z</button>
           <button className="border px-4 py-3 rounded-lg" onClick={()=> setSort("nameDesc")}>Sort Z - A</button>
           <button className="border px-4 py-3 rounded-lg" onClick={()=> setSort("createdAsc")}>Sort by Newest</button>
           <button className="border px-4 py-3 rounded-lg" onClick={()=> setSort("updatedNew")}>Sort by Recently Updated</button>
@@ -101,10 +103,12 @@ const Home: NextPage = (props) => {
           content: post.content,
           created: post.createdAt,
           updated: post.updated,
-          username: post.user.name,
+          userId: post.user.id,
+          name: post.user.name,
           image: post.user.image,
           email: post.user.email,
-        }}/>
+        }}
+        userId={undefined}/>
        ))}
        </section>
       </main>

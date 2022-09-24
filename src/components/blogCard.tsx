@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useSession } from 'next-auth/react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { trpc } from '../utils/trpc';
 import { createPostValidation } from '../utils/validations';
@@ -8,6 +8,7 @@ import TextareaAutosize from "react-textarea-autosize"
 import Link from 'next/link';
 import Markdown from './Markdown';
 import { useRouter } from 'next/router';
+import { dateFormatter } from '../utils/dateFormatter';
 
 const BlogCard:React.FC<{
     inputs: {
@@ -16,12 +17,14 @@ const BlogCard:React.FC<{
         content: string;
         updated: Date | null;
         created: Date;
-        username: string | null;
+        userId: string;
+        name: string | null;
         image: string | null;
         email: string | null;
     },
     onHomePage: boolean;
-}> = ({onHomePage, inputs}) => {
+    userId: string | undefined;
+}> = ({onHomePage, inputs, userId}) => {
 
   const router = useRouter();
   const onMyBlogs = router.pathname.includes("/post")
@@ -67,6 +70,9 @@ const BlogCard:React.FC<{
         id
     })
   }
+
+  
+
   
   return (
 
@@ -77,9 +83,13 @@ const BlogCard:React.FC<{
         <Link href={"/post/" + inputs.id}><a className="text-3xl flex-1">{inputs.title}</a></Link>
 
         {/* Blog Created By + Username + Profile Image */}
-        <p className="flex items-center gap-x-5">{`${router.pathname === "/" ? "Created By: " + inputs.username : ""}`}
-          <span><img className="rounded-full" src={inputs.image!} height="50" width="50"/></span>
-        </p>
+            <Link href={`/profile/${inputs.userId}`}>
+              <a>
+                <p className="flex items-center gap-x-5">{`${router.pathname === "/" ? "Created By: " + inputs.name : ""}`}
+                  <span><img className="rounded-full" src={inputs.image!} height="50" width="50"/></span>
+                </p>
+              </a>
+            </Link>
       </div>
 
     {/* Blog Content */}
@@ -87,7 +97,6 @@ const BlogCard:React.FC<{
       onHomePage && <Markdown>{`${inputs.content.slice(0, 300)}...`}</Markdown>
     }
     
-
     {/* Update Form */}
       {
         onMyBlogs && (
@@ -108,8 +117,10 @@ const BlogCard:React.FC<{
       </div>
     }
     <div className='flex gap-x-10 relative'>
-    <small>Created On: {inputs.created.toLocaleDateString()}</small> <div className='absolute before:content-none before:top-0 before:h-[20px] before:w-[20px] before:bg-[#fff]'/>
-    {inputs.updated && <small className='text-center'> Updated on: {inputs?.updated!.toLocaleDateString()}</small> }
+    <small>Created On: {dateFormatter(inputs.created)}</small> 
+      <div className='absolute before:content-none before:top-0 before:h-[20px] before:w-[20px] before:bg-[#fff]'/>
+        {inputs.updated && 
+    <small className='text-center'> Updated on: {dateFormatter(inputs.updated)}</small> }
     </div>
     </div>
 

@@ -12,6 +12,10 @@ import { useSession } from 'next-auth/react';
 
 
 const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+
+    const userId = id;
+    console.log(userId);
+    
     const {data: session} = useSession();
 
     const [isEditing, setIsEditing] = useState(false);
@@ -91,10 +95,11 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
             }
 
             {/* Show Most Recent Posts */}
-            <section className='flex gap-x-5 items-center'>
+            {/* <section className='flex gap-x-5 items-center'>
                 {recentPosts?.map((blog)=> (
                     <BlogCard 
                     key={blog.id}
+                    userId={userId}
                     onHomePage={true}
                     inputs={{
                       id: blog.id,
@@ -107,7 +112,7 @@ const Profile = ({id}: InferGetServerSidePropsType<typeof getServerSideProps>) =
                       email: blog.user.email,
                     }}/>
                 ))}
-            </section>
+            </section> */}
         </main>
      </AuthWrapper>
   )

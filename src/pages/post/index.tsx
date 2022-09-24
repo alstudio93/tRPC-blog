@@ -95,19 +95,21 @@ const MyBlogs = ({}) => {
           <div className='flex flex-wrap gap-x-10 justify-center'>
             {/* <h2>{session?.user?.name}'s Blogs</h2> */}
             {userBlogs?.map((blog)=> (
-        <BlogCard 
-        key={blog.id}
-        onHomePage={true}
-        inputs={{
-          id: blog.id,
-          title: blog.title,
-          content: blog.content,
-          created: blog.createdAt,
-          updated: blog.updated,
-          username: blog.user.name,
-          image: blog.user.image,
-          email: blog.user.email,
-        }}/>
+        <BlogCard
+                key={blog.id}
+                onHomePage={true}
+                inputs={{
+                  id: blog.id,
+                  title: blog.title,
+                  content: blog.content,
+                  created: blog.createdAt,
+                  updated: blog.updated,
+                  username: blog.user.name,
+                  image: blog.user.image,
+                  email: blog.user.email,
+                }}
+                userId={undefined}
+                />
         ))}
           </div>
     </section>

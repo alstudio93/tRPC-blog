@@ -55,4 +55,4 @@ export const userRouter = createRouter()
     }
   })
 
-  export type GetUserArrType = inferQueryInput<"post.get-posts">;
+  export type GetUserArrType = inferQueryInput<"user.get-profile">;

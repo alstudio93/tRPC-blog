@@ -88,7 +88,7 @@ const BlogCard:React.FC<{
             <Link href={`/profile/${inputs.userId}`}>
               <a className="flex items-center justify-between  gap-x-5 ">
                {`${router.pathname === "/" ? "Created By: " + inputs.name : ""}`}
-                  <img className="rounded-full" src={inputs.image!} height="50" width="50"/>
+                  { inputs?.image && <img className="rounded-full" src={inputs?.image} height="50" width="50"/>}
               </a>
             </Link>
       </div>
@@ -105,7 +105,7 @@ const BlogCard:React.FC<{
             <form className={`flex-col items-center gap-y-10 pt-10 ${showEdit ? "flex" : "hidden"}`}>
             <fieldset className='w-full flex flex-col gap-y-2'>
                 <label htmlFor="seoDescription">SEO Description</label>
-                <input id="seoDescription" {...register("seoDescription")} className="w-full rounded-lg px-2 py-3" placeholder={inputs?.seoDescription!}  />
+                {inputs.seoDescription && <input id="seoDescription" {...register("seoDescription")} className="w-full rounded-lg px-2 py-3" placeholder={inputs?.seoDescription}  />}
               </fieldset>
               <fieldset className='w-full flex flex-col gap-y-2'>
                 <label htmlFor="title">Title</label>

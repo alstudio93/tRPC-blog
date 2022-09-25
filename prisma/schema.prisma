@@ -24,7 +24,6 @@ model Post {
     updated        DateTime?
     user           User      @relation(fields: [userEmail], references: [email])
     userEmail      String
-    seoTitle       String?
     seoDescription String?
 }
 

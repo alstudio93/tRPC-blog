@@ -19,7 +19,6 @@ const BlogCard:React.FC<{
         content: string;
         updated: Date | null;
         created: Date;
-        seoTitle: string | null;
         seoDescription: string | null;
         userId: string;
         name: string | null;

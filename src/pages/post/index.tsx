@@ -24,7 +24,6 @@ const MyBlogs = ({}) => {
     defaultValues: {
       title: "",
       content: "",
-      seoTitle: "",
       seoDescription: ""
     },
     resolver: zodResolver(createPostValidation)
@@ -38,8 +37,8 @@ const MyBlogs = ({}) => {
     }
   })
 
-  const onCreatePost = ({title, content, seoTitle, seoDescription}: {title: string, content: string, seoTitle: string, seoDescription: string}) => {
-    return createPost({title, content, seoTitle, seoDescription});
+  const onCreatePost = ({title, content, seoDescription}: {title: string, content: string, seoDescription: string}) => {
+    return createPost({title, content, seoDescription});
   }
     if(sort === "nameAsc"){
     userBlogs?.sort((a, b)=> {
@@ -84,10 +83,7 @@ const MyBlogs = ({}) => {
                   <button type="button" onClick={()=> setShowSEO(prev => !prev)}>Add Custom SEO</button>
                   {showSEO && (
                     <div className='flex flex-col w-full '>
-                    <fieldset className='flex flex-col w-full mb-5 gap-y-2'>
-                      <label htmlFor="seoTitle">SEO Title</label>
-                      <input type="text" id="seoTitle" {...register("seoTitle")} className="p-2 rounded-lg" placeholder='SEO-Title'/>
-                    </fieldset>
+
 
                     <fieldset className='flex flex-col w-full mb-5 gap-y-2'>
                       <label htmlFor="seoDescription">SEO Description</label>
@@ -124,7 +120,6 @@ const MyBlogs = ({}) => {
                   id: blog.id,
                   title: blog.title,
                   content: blog.content,
-                  seoTitle: blog.seoTitle,
                   seoDescription: blog.seoDescription,
                   created: blog.createdAt,
                   updated: blog.updated,

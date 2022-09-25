@@ -10,7 +10,8 @@ import { createPostValidation } from '../../utils/validations';
 
 const MyBlogs = ({}) => {
 
-  const [sort, setSort] = useState("")
+  const [sort, setSort] = useState("");
+  const [showSEO, setShowSEO] = useState(false);
 
      // User Specific Blogs
     const {data: session} = useSession();
@@ -22,7 +23,9 @@ const MyBlogs = ({}) => {
   const {register, reset, handleSubmit} = useForm({
     defaultValues: {
       title: "",
-      content: ""
+      content: "",
+      seoTitle: "",
+      seoDescription: ""
     },
     resolver: zodResolver(createPostValidation)
   });
@@ -35,8 +38,8 @@ const MyBlogs = ({}) => {
     }
   })
 
-  const onCreatePost = ({title, content}: {title: string, content: string}) => {
-    return createPost({title, content});
+  const onCreatePost = ({title, content, seoTitle, seoDescription}: {title: string, content: string, seoTitle: string, seoDescription: string}) => {
+    return createPost({title, content, seoTitle, seoDescription});
   }
     if(sort === "nameAsc"){
     userBlogs?.sort((a, b)=> {
@@ -78,8 +81,28 @@ const MyBlogs = ({}) => {
                 <>
                 <h2 className="text-8xl text-center">CREATE POST</h2>
                 <form className="flex flex-col gap-y-2 pt-5">
-                    <input placeholder="Title" className="shadow-lg rounded-lg p-2" {...register("title")} />
-                    <ReactTextareaAutosize rows={7} placeholder="Content" className="shadow-lg rounded-lg p-2" {...register("content")}/>
+                  <button type="button" onClick={()=> setShowSEO(prev => !prev)}>Add Custom SEO</button>
+                  {showSEO && (
+                    <div className='flex flex-col w-full '>
+                    <fieldset className='flex flex-col w-full mb-5 gap-y-2'>
+                      <label htmlFor="seoTitle">SEO Title</label>
+                      <input type="text" id="seoTitle" {...register("seoTitle")} className="p-2 rounded-lg" placeholder='SEO-Title'/>
+                    </fieldset>
+
+                    <fieldset className='flex flex-col w-full mb-5 gap-y-2'>
+                      <label htmlFor="seoDescription">SEO Description</label>
+                      <input type="text" id="seoDescription" {...register("seoDescription")} className="p-2 rounded-lg" placeholder='SEO-Description'/>
+                    </fieldset>
+                  </div>
+                  )}
+                    <fieldset className='flex flex-col w-full mb-5 gap-y-2'>
+                      <label htmlFor='title'>Blog Title</label>
+                    <input id="title" placeholder="Title" className="shadow-lg rounded-lg p-2" {...register("title")} />
+                    </fieldset>
+                    <fieldset className='flex flex-col w-full mb-5 gap-y-2'>
+                      <label htmlFor="content">Blog Content</label>
+                      <ReactTextareaAutosize id="content" rows={7} placeholder="Content" className="shadow-lg rounded-lg p-2" {...register("content")}/>
+                    </fieldset>
                     <button className="p-2 w-32 mx-auto border rounded-lg" onClick={handleSubmit(onCreatePost)}>Create</button>
                 </form>
                 </>
@@ -101,6 +124,8 @@ const MyBlogs = ({}) => {
                   id: blog.id,
                   title: blog.title,
                   content: blog.content,
+                  seoTitle: blog.seoTitle,
+                  seoDescription: blog.seoDescription,
                   created: blog.createdAt,
                   updated: blog.updated,
                   userId: blog.user.id,

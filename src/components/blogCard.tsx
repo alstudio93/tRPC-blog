@@ -19,6 +19,8 @@ const BlogCard:React.FC<{
         content: string;
         updated: Date | null;
         created: Date;
+        seoTitle: string | null;
+        seoDescription: string | null;
         userId: string;
         name: string | null;
         image: string | null;
@@ -48,6 +50,7 @@ const BlogCard:React.FC<{
   const editPost = trpc.useMutation("post.edit-post", {
     onSuccess: ()=> {
       client.invalidateQueries(["post.get-my-posts"])
+      setShowEdit(false);
     }
   })
 
@@ -72,9 +75,6 @@ const BlogCard:React.FC<{
     })
   }
 
-  
-
-  
   return (
 
     <article className="mt-20 border rounded-lg px-5 py-3 flex flex-col w-3/4 gap-y-5">
@@ -103,23 +103,37 @@ const BlogCard:React.FC<{
         onMyBlogs && (
           <>
             <form className={`flex-col items-center gap-y-10 pt-10 ${showEdit ? "flex" : "hidden"}`}>
-              <input {...register("title")} className="w-full rounded-lg px-2 py-3" placeholder={inputs.title}  />
-              <TextareaAutosize rows={7} {...register("content")}  className="w-full rounded-lg px-2 py-3" placeholder={inputs.content} />
+              <fieldset className='w-full flex flex-col gap-y-2'>
+                <label htmlFor="title">Title</label>
+                <input id="title" {...register("title")} className="w-full rounded-lg px-2 py-3" placeholder={inputs.title}  />
+              </fieldset>
+              <fieldset className='w-full flex flex-col gap-y-2'>
+                <label htmlFor="content">Content Body</label>
+                <TextareaAutosize id="content" rows={7} {...register("content")}  className="w-full rounded-lg px-2 py-3" placeholder={inputs.content} />
+              </fieldset>
             </form>
             <div className='flex items-center justify-between'>
             <button className='border p-2 w-40 rounded-lg' onClick={()=> setShowEdit(showEdit => !showEdit)}>{showEdit ? "Cancel Edit" : "Edit Post"}</button>
-           {showEdit && <span className='flex items-center gap-x-3'> Markdown Cheatsheet: <Link href="https://www.markdownguide.org/cheat-sheet/"><a title="Markdown Cheatsheet"><BsMarkdown className='text-3xl '/></a></Link></span>}
+            {onMyBlogs && session?.user?.email === inputs.email && 
+              <div className='flex items-center gap-x-10'>
+                  {showEdit && <button className="p-2 w-40 mx-auto border rounded-lg" onClick={handleSubmit(onEditPost)}>Publish Changes</button>}
+                  {/* <button className="p-2 w-32 mx-auto border rounded-lg" >Delete</button> */}
+              </div>
+            }
+           {showEdit && 
+            <span className='flex items-center gap-x-3'> Markdown Cheatsheet: 
+              <Link  href="https://www.markdownguide.org/cheat-sheet/">
+                <a title="Markdown Cheatsheet" target="_blank" rel="noreferrer">
+                  <BsMarkdown className='text-3xl '/>
+                </a>
+              </Link>
+            </span>
+          }
             </div>
           </>
         )
       }
     <div className='flex flex-col items-center gap-y-5'>
-    {onMyBlogs && session?.user?.email === inputs.email && 
-      <div className='flex items-center gap-x-10'>
-          {showEdit && <button className="p-2 w-40 mx-auto border rounded-lg" onClick={handleSubmit(onEditPost)}>Publish Changes</button>}
-          {/* <button className="p-2 w-32 mx-auto border rounded-lg" >Delete</button> */}
-      </div>
-    }
     <div className='flex items-center gap-x-10 relative'>
     <small>Created On: {dateFormatter(inputs.created)}</small> 
       <div className='absolute before:content-none before:top-0 before:h-[20px] before:w-[20px] before:bg-[#fff]'/>

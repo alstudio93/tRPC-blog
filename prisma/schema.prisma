@@ -17,13 +17,15 @@ datasource db {
 }
 
 model Post {
-    id        String    @id @default(cuid())
-    title     String
-    content   String    @db.Text
-    createdAt DateTime  @default(now())
-    updated   DateTime?
-    user      User      @relation(fields: [userEmail], references: [email])
-    userEmail String
+    id             String    @id @default(cuid())
+    title          String
+    content        String    @db.Text
+    createdAt      DateTime  @default(now())
+    updated        DateTime?
+    user           User      @relation(fields: [userEmail], references: [email])
+    userEmail      String
+    seoTitle       String?
+    seoDescription String?
 }
 
 // Necessary for Next auth

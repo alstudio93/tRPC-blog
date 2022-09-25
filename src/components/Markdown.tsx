@@ -11,7 +11,7 @@ const Markdown: React.FC<{ children: string }> = ({ children}) => {
     //     <ReactMarkdown className="markdown" remarkPlugins={[remarkGfm]}>{children}</ReactMarkdown>
     //   </div>
     // </article>
-    <article className="prose sm:prose-base prose-sm prose-gray max-w-none">
+    <article className="max-w-3xl">
       <div className="max-w-[800px] mx-auto">
         <ReactMarkdown className="markdown" remarkPlugins={[remarkGfm, remarkGemoji]}>{children}</ReactMarkdown>
       </div>

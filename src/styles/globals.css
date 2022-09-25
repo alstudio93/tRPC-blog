@@ -13,3 +13,7 @@
     font-size: 2rem;
     margin-bottom: 20px;
 }
+
+.markdown pre code {
+    white-space: pre-wrap;
+}

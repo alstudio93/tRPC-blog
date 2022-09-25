@@ -45,6 +45,8 @@ export const postRouter = createRouter()
             content: true,
             createdAt: true,
             updated: true,
+            seoTitle: true,
+            seoDescription: true,
             user: {
               select: {
                 id: true,
@@ -102,7 +104,9 @@ export const postRouter = createRouter()
           data: {
             title: input.title,
             content: input.content,
-            userEmail: ctx.session.user?.email
+            userEmail: ctx.session.user?.email,
+            seoTitle: input.seoTitle,
+            seoDescription: input.seoDescription
           },
         });
        }

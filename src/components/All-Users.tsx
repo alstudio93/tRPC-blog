@@ -7,7 +7,8 @@ const AllUsers = () => {
 
 
     return (
-    <div className='flex flex-col gap-y-10 items-center mx-auto'>
+    <div className='hidden lg:flex flex-col gap-y-10 items-center mx-auto '>
+        <h3 className='text-left w-full font-bold'>Meet other Writers</h3>
         {data?.map((user)=> (
             <div key={user.id} >
                 <div className="flex items-center justify-between w-52 gap-x-5 ">

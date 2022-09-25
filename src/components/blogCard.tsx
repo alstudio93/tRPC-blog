@@ -41,6 +41,7 @@ const BlogCard:React.FC<{
         defaultValues: {
           title: inputs.title ?? "",
           content: inputs.content ?? "",
+          seoDescription: inputs.seoDescription ?? "",
         },
         resolver: zodResolver(createPostValidation)
       });
@@ -53,11 +54,12 @@ const BlogCard:React.FC<{
     }
   })
 
-  const onEditPost = ({title, content}: {title: string, content: string}) => {
+  const onEditPost = ({title, content, seoDescription}: {title: string, content: string, seoDescription: string}) => {
     return editPost.mutate({
         id: inputs.id,
         title,
-        content
+        content, 
+        seoDescription
     });
   }
 
@@ -76,18 +78,17 @@ const BlogCard:React.FC<{
 
   return (
 
-    <article className="mt-20 border rounded-lg px-5 py-3 flex flex-col w-3/4 gap-y-5">
+    <article className="mt-20 border rounded-lg px-5 py-3 flex flex-col w-11/12 gap-y-5">
       
-      <div className='flex justify-between items-center gap-x-5'>
+      <div className='flex justify-between items-center gap-x-5 flex-col md:flex-row w-full'>
         {/* Blog Title */}
-        <Link href={"/post/" + inputs.id}><a className="text-3xl flex-1">{inputs.title}</a></Link>
+        <Link href={"/post/" + inputs.id}><a className="text-3xl  text-left">{inputs.title}</a></Link>
 
         {/* Blog Created By + Username + Profile Image */}
             <Link href={`/profile/${inputs.userId}`}>
-              <a>
-                <p className="flex items-center gap-x-5">{`${router.pathname === "/" ? "Created By: " + inputs.name : ""}`}
-                  <span><img className="rounded-full" src={inputs.image!} height="50" width="50"/></span>
-                </p>
+              <a className="flex items-center justify-between  gap-x-5 ">
+               {`${router.pathname === "/" ? "Created By: " + inputs.name : ""}`}
+                  <img className="rounded-full" src={inputs.image!} height="50" width="50"/>
               </a>
             </Link>
       </div>
@@ -102,6 +103,10 @@ const BlogCard:React.FC<{
         onMyBlogs && (
           <>
             <form className={`flex-col items-center gap-y-10 pt-10 ${showEdit ? "flex" : "hidden"}`}>
+            <fieldset className='w-full flex flex-col gap-y-2'>
+                <label htmlFor="seoDescription">SEO Description</label>
+                <input id="seoDescription" {...register("seoDescription")} className="w-full rounded-lg px-2 py-3" placeholder={inputs?.seoDescription!}  />
+              </fieldset>
               <fieldset className='w-full flex flex-col gap-y-2'>
                 <label htmlFor="title">Title</label>
                 <input id="title" {...register("title")} className="w-full rounded-lg px-2 py-3" placeholder={inputs.title}  />
@@ -133,12 +138,15 @@ const BlogCard:React.FC<{
         )
       }
     <div className='flex flex-col items-center gap-y-5'>
-    <div className='flex items-center gap-x-10 relative'>
-    <small>Created On: {dateFormatter(inputs.created)}</small> 
-      <div className='absolute before:content-none before:top-0 before:h-[20px] before:w-[20px] before:bg-[#fff]'/>
-        {inputs.updated && 
-    <small className='text-center'> Updated on: {dateFormatter(inputs.updated)}</small> }
-    {router.pathname === "/post" && <AiOutlineDelete  className='text-3xl cursor-pointer' onClick={()=> handleDelete(inputs.id)} />}
+    <div className='flex flex-col items-start md:flex-row md:items-center md:justify-between w-full'>
+      <div className='flex flex-col'>
+      <small>Created On: {dateFormatter(inputs.created)}</small> 
+        <div className='absolute before:content-none before:top-0 before:h-[20px] before:w-[20px] before:bg-[#fff]'/>
+          {inputs.updated && 
+      <small className='text-center'> Updated on: {dateFormatter(inputs.updated)}</small> }
+      </div>
+      <Link href={`/post/${inputs.id}`}><a className='border w-48 text-center p-2 rounded-lg'>Read Blog</a></Link>
+      {router.pathname === "/post" && <AiOutlineDelete  className='text-3xl cursor-pointer' onClick={()=> handleDelete(inputs.id)} />}
     </div>
     </div>
 

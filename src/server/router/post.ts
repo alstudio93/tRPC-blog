@@ -117,6 +117,7 @@ export const postRouter = createRouter()
       id: z.string(),
       title: z.string().min(3).max(200),
       content: z.string().min(1).max(10000).trim(),
+      seoDescription: z.string().min(10).max(165)
     }),
     async resolve({input, ctx}){
       if(!ctx.session) throw new Error("Unauthorized");
@@ -140,6 +141,7 @@ export const postRouter = createRouter()
               data: {
                 title: input.title,
                 content: input.content,
+                seoDescription: input.seoDescription,
                 updated: new Date(),
               }
             })

@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import ReactTextareaAutosize from 'react-textarea-autosize';
+import { optional } from 'zod';
 import BlogCard from '../../components/blogCard';
 import Navbar from '../../components/Navbar';
 import { trpc } from '../../utils/trpc';
@@ -37,7 +38,7 @@ const MyBlogs = ({}) => {
     }
   })
 
-  const onCreatePost = ({title, content, seoDescription}: {title: string, content: string, seoDescription: string}) => {
+  const onCreatePost = ({title, content, seoDescription}: {title: string, content: string, seoDescription: string }) => {
     return createPost({title, content, seoDescription});
   }
     if(sort === "nameAsc"){

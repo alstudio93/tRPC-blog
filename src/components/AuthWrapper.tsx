@@ -10,7 +10,7 @@ const AuthWrapper: React.FC<{
 
     const authCheck = () => {
         if(status === "unauthenticated"){
-           signIn("github", {
+           signIn("google", {
                 callbackUrl: `http://localhost:3000`
             })
         }

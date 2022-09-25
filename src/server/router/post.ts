@@ -14,6 +14,8 @@ export const postRouter = createRouter()
           content: true,
           createdAt: true,
           updated: true,
+          seoTitle: true,
+          seoDescription: true,
           user: {
             select: {
               id: true,

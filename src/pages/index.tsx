@@ -112,6 +112,8 @@ const Home: NextPage = (props) => {
           content: post.content,
           created: post.createdAt,
           updated: post.updated,
+          seoTitle: post.seoTitle,
+          seoDescription: post.seoDescription,
           userId: post.user.id,
           name: post.user.name,
           image: post.user.image,
